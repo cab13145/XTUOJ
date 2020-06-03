@@ -1,5 +1,5 @@
 from django.db import models
-from contest.models import Contest
+from utils.models import ProblemAuth,ProblemLevel
 
 class ProblemTag(models.Model):
     tag = models.TextField()
@@ -10,14 +10,30 @@ class ProblemTag(models.Model):
         return self.tag
 
     class Meta:
-        db_table = "problem_tag"
+        db_table = "problemtag"
 
 class Problem(models.Model):
-    problem_id = models.CharField(max_length=64, primary_key=True)
-    contest = models.ForeignKey(Contest, null=True, on_delete=models.CASCADE)
-    author = models.CharField(max_length=64, default="eric_xie")
+    problem_id = models.CharField(max_length=64, primary_key=True, null=False)
     title = models.CharField(max_length=200)
+    level = models.CharField(max_length=64, default=ProblemLevel.MEDIUM)
+    score = models.IntegerField(default=0)
     addtime = models.DateTimeField(auto_now=True)
+    auth = models.CharField(max_length=64, default=ProblemAuth.PUBLIC)
+    tag = models.ManyToManyField(ProblemTag)
+
+    objects = models.Manager()
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        db_table = "problem"
+        ordering = ("problem_id",)
+
+class ProblemDetail(models.Model):
+    problem = models.ForeignKey(Problem, null=False, unique=True, on_delete=models.CASCADE)
+    title = models.CharField(max_length=200)
+    author = models.CharField(max_length=64, null=True)
     problemdes = models.TextField()
     input = models.TextField()
     output = models.TextField()
@@ -27,7 +43,6 @@ class Problem(models.Model):
     time = models.IntegerField()
     memory = models.IntegerField()
     hint = models.TextField(null=True)
-    auth = models.IntegerField()
 
     objects = models.Manager()
 
@@ -35,31 +50,6 @@ class Problem(models.Model):
         return self.title
 
     class Meta:
-        db_table = "problem"
-        ordering = ("addtime",)
-
-class ProblemData(models.Model):
-    problem_id = models.CharField(max_length=64)
-    contest = models.ForeignKey(Contest, null=True, on_delete=models.CASCADE)
-    level = models.IntegerField()
-    title = models.CharField(max_length=200)
-    submission = models.IntegerField()
-    acnum = models.IntegerField()
-    wanum = models.IntegerField()
-    mlenum = models.IntegerField()
-    renum = models.IntegerField()
-    cenum = models.IntegerField()
-    penum = models.IntegerField()
-    senum = models.IntegerField()
-    tag = models.ManyToManyField(ProblemTag)
-    auth = models.IntegerField()
-    score = models.IntegerField()
-
-    objects = models.Manager()
-
-    def __str__(self):
-        return self.title
-
-    class Meta:
-        db_table = "problem_data"
+        db_table = "problem_detail"
+        ordering = ("problem",)
 
