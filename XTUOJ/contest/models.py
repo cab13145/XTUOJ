@@ -17,9 +17,6 @@ class Contest(models.Model):
 
     objects = models.Manager()
 
-    def __str__(self):
-        return self.creator
-
     class Meta:
         db_table = "contest"
         ordering = ("-start_time",)
@@ -33,9 +30,6 @@ class ContestAnnouncement(models.Model):
 
     objects = models.Manager()
 
-    def __str__(self):
-        return self.contest_id
-
     class Meta:
         db_table = "contest_announcement"
         ordering = ("-create_time",)
@@ -48,8 +42,6 @@ class ContestProblem(models.Model):
 
     objects = models.Manager()
 
-    def __str__(self):
-        return self.contest_id
 
     class Meta:
         db_table = "contest_problem"
@@ -65,8 +57,6 @@ class ContestComment(models.Model):
 
     objects = models.Manager()
 
-    def __str__(self):
-        return self.username
 
     class Meta:
         db_table = "contest_comment"

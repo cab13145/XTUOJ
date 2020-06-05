@@ -25,8 +25,8 @@ class ProblemDetailView(viewsets.GenericViewSet, mixins.RetrieveModelMixin, mixi
     permission_classes = (AuthOnly,)
     throttle_classes = [ScopedRateThrottle,]
     throttle_scope = "post"
-    #filter_backends = (DjangoFilterBackend,)
-    #filter_fields = ('problem')
+    filter_backends = (DjangoFilterBackend,)
+    filter_fields = ('problem',)
 
 class ProblemView(viewsets.ModelViewSet):
     queryset = Problem.objects.all()

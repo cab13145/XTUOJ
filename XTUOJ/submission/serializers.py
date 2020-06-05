@@ -21,7 +21,6 @@ class JudgeStatusSerializer(serializers.ModelSerializer):
         depth = 2
 
 class SubmitCodeSerializer(serializers.ModelSerializer):
-    #judge = StatusSerializer()
     class Meta:
         model = SubmitCode
         fields = '__all__'

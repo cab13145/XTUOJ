@@ -5,7 +5,7 @@ from problem.models import Problem
 
 class User(models.Model):
     username = models.CharField(max_length=64, primary_key=True, null=False)
-    password = models.CharField(max_length=20, null=False)
+    password = models.CharField(max_length=64, null=False)
     name = models.CharField(max_length=64, null=False)
     regtime = models.DateTimeField(auto_now_add=True)
     logintime = models.DateTimeField(auto_now=True)

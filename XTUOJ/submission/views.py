@@ -70,8 +70,7 @@ class GetCodeView(viewsets.GenericViewSet, mixins.RetrieveModelMixin):
     pagination_class = LimitOffsetPagination
     throttle_classes = [ScopedRateThrottle,]
     throttle_scope = "post"
-    filter_backends = (DjangoFilterBackend,)
-    #filter_fields = ('username', 'result', 'contest', 'problem')
+
 
 class CaseStatusView(viewsets.ModelViewSet):
     queryset = CaseStatus.objects.all()
